@@ -2334,6 +2334,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mp3@*, mp3@workspace:packages/mp3":
+  version: 0.0.0-use.local
+  resolution: "mp3@workspace:packages/mp3"
+  languageName: unknown
+  linkType: soft
+
 "mri@npm:^1.1.0":
   version: 1.2.0
   resolution: "mri@npm:1.2.0"
@@ -2395,6 +2401,7 @@ __metadata:
     autoprefixer: ^10.4.7
     env-cmd: ^10.1.0
     eslint-config-custom: "*"
+    mp3: "*"
     postcss: ^8.4.14
     postcss-load-config: ^4.0.1
     stores: "*"
