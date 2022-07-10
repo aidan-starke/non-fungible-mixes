@@ -1,0 +1,19 @@
+{
+  "pipeline": {
+    "build": {
+      "dependsOn": [
+        "^build",
+        "$PINATA_API_KEY",
+        "$PINATA_API_SECRET",
+        "$PINATA_JWT"
+      ],
+      "outputs": [".svelte-kit/**"]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    }
+  }
+}
