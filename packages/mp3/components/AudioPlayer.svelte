@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import "./index.css";
+	import "../index.css";
 	import {
 		RepeatIcon,
 		NoRepeatIcon,
@@ -10,9 +10,9 @@
 		PreviousIcon,
 		PlayIcon,
 		PauseIcon,
-	} from "./icons";
-	import { trackIndex, isPlaying, state } from "./store";
-	import { displayDuration, showMediaSession } from "./utils";
+	} from "../icons";
+	import { trackIndex, isPlaying, state } from "../store";
+	import { displayDuration, showMediaSession } from "../utils";
 
 	const dispatch = createEventDispatcher();
 	let className = "";
@@ -153,7 +153,7 @@
 			} else audio.pause();
 		}
 	}
-    
+
 	//Event dispatch
 	const canplay = (e: Event) => dispatch("canplay", e);
 	const canplaythrough = (e: Event) => dispatch("canplaythrough", e);
@@ -211,89 +211,113 @@
 		</div>
 	{/if}
 
-	<div class="control" bind:this={controller}>
+	<div class="control border-sand rounded border-2" bind:this={controller}>
 		<button name="repeat" on:click={() => changeState()}>
-			{#if $state === "repeat-all"}
-				<RepeatIcon {color} />
-			{:else if $state === "repeat"}
-				<RepeatOnceIcon {color} />
-			{:else}
-				<NoRepeatIcon {color} />
-			{/if}
+			<div
+				class="flex items-center justify-center rounded border-2 border-gray-500 p-1"
+			>
+				{#if $state === "repeat-all"}
+					<RepeatIcon {color} class="h-4 w-4" />
+				{:else if $state === "repeat"}
+					<RepeatOnceIcon {color} class="h-4 w-4" />
+				{:else}
+					<NoRepeatIcon {color} class="h-4 w-4" />
+				{/if}
+			</div>
 		</button>
 		{#if showShuffle}
-			<button
-				name="shuffle"
-				on:click={() => setShuffle()}
-				style="background-color: {shuffle ? '#ff726f' : ''}"
+			<div
+				class="flex items-center justify-center rounded border-2 border-gray-500"
 			>
-				<ShuffleIcon {color} />
-			</button>
+				<button
+					name="shuffle"
+					on:click={() => setShuffle()}
+					style="background-color: {shuffle ? '#ff726f' : ''}"
+				>
+					<ShuffleIcon {color} class="h-4 w-4" />
+				</button>
+			</div>
 		{/if}
 		{#if showPrev}
-			<button name="previous-track" on:click={() => toPrevTrack()}>
-				<PreviousIcon {color} />
-			</button>
+			<div
+				class="flex items-center justify-center rounded border-2 border-gray-500"
+			>
+				<button name="previous-track" on:click={() => toPrevTrack()}>
+					<PreviousIcon {color} />
+				</button>
+			</div>
 		{/if}
-		{#if $isPlaying}
-			<button name="pause" class="play" on:click={() => isPlaying.set(false)}>
-				<PauseIcon {color} />
-			</button>
-		{:else}
-			<button name="play" class="play" on:click={() => isPlaying.set(true)}>
-				<PlayIcon {color} />
-			</button>
-		{/if}
+		<div
+			class="flex items-center justify-center rounded border-2 border-gray-500"
+		>
+			{#if $isPlaying}
+				<button name="pause" class="play" on:click={() => isPlaying.set(false)}>
+					<PauseIcon {color} />
+				</button>
+			{:else}
+				<button name="play" class="play" on:click={() => isPlaying.set(true)}>
+					<PlayIcon {color} />
+				</button>
+			{/if}
+		</div>
 
 		{#if showNext}
-			<button name="next-track" on:click={() => toNextTrack()}>
-				<NextIcon {color} />
-			</button>
+			<div
+				class="flex items-center justify-center rounded border-2 border-gray-500"
+			>
+				<button name="next-track" on:click={() => toNextTrack()}>
+					<NextIcon {color} />
+				</button>
+			</div>
 		{/if}
 		{#if showVolume}
-			<div class="volume">
-				<button name="speaker" on:click={mute}>
-					{#if volume !== 0}
-						<svg
-							width="15"
-							height="15"
-							viewBox="0 0 15 14"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-							><path
-								d="M8 1.5C8 1.31062 7.893 1.13749 7.72361 1.05279C7.55421 0.968093 7.35151 0.986371 7.2 1.1L3.33333 4H1.5C0.671573 4 0 4.67158 0 5.5V9.5C0 10.3284 0.671573 11 1.5 11H3.33333L7.2 13.9C7.35151 14.0136 7.55421 14.0319 7.72361 13.9472C7.893 13.8625 8 13.6894 8 13.5V1.5ZM3.8 4.9L7 2.5V12.5L3.8 10.1C3.71345 10.0351 3.60819 10 3.5 10H1.5C1.22386 10 1 9.77614 1 9.5V5.5C1 5.22386 1.22386 5 1.5 5H3.5C3.60819 5 3.71345 4.96491 3.8 4.9ZM10.833 3.95949C10.7106 3.77557 10.4623 3.72567 10.2784 3.84804C10.0944 3.97041 10.0445 4.21871 10.1669 4.40264C11.4111 6.27268 11.4111 8.72728 10.1669 10.5973C10.0445 10.7813 10.0944 11.0296 10.2784 11.1519C10.4623 11.2743 10.7106 11.2244 10.833 11.0405C12.2558 8.90199 12.2558 6.09798 10.833 3.95949Z"
-								fill={color}
-								fill-rule="evenodd"
-								clip-rule="evenodd"
-							/></svg
-						>
-					{:else}
-						<svg
-							width="15"
-							height="15"
-							viewBox="0 0 15 15"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-							><path
-								d="M7.72361 1.05279C7.893 1.13749 8 1.31062 8 1.5V13.5C8 13.6894 7.893 13.8625 7.72361 13.9472C7.55421 14.0319 7.35151 14.0136 7.2 13.9L3.33333 11H1.5C0.671573 11 0 10.3284 0 9.5V5.5C0 4.67158 0.671573 4 1.5 4H3.33333L7.2 1.1C7.35151 0.986371 7.55421 0.968093 7.72361 1.05279ZM7 2.5L3.8 4.9C3.71345 4.96491 3.60819 5 3.5 5H1.5C1.22386 5 1 5.22386 1 5.5V9.5C1 9.77614 1.22386 10 1.5 10H3.5C3.60819 10 3.71345 10.0351 3.8 10.1L7 12.5V2.5ZM14.8536 5.14645C15.0488 5.34171 15.0488 5.65829 14.8536 5.85355L13.2071 7.5L14.8536 9.14645C15.0488 9.34171 15.0488 9.65829 14.8536 9.85355C14.6583 10.0488 14.3417 10.0488 14.1464 9.85355L12.5 8.20711L10.8536 9.85355C10.6583 10.0488 10.3417 10.0488 10.1464 9.85355C9.95118 9.65829 9.95118 9.34171 10.1464 9.14645L11.7929 7.5L10.1464 5.85355C9.95118 5.65829 9.95118 5.34171 10.1464 5.14645C10.3417 4.95118 10.6583 4.95118 10.8536 5.14645L12.5 6.79289L14.1464 5.14645C14.3417 4.95118 14.6583 4.95118 14.8536 5.14645Z"
-								fill={color}
-								fill-rule="evenodd"
-								clip-rule="evenodd"
-							/></svg
-						>
+			<div
+				class="flex items-center justify-center rounded border-2 border-gray-500 py-1"
+			>
+				<div class="volume">
+					<button name="speaker" on:click={mute}>
+						{#if volume !== 0}
+							<svg
+								width="15"
+								height="15"
+								viewBox="0 0 15 14"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								><path
+									d="M8 1.5C8 1.31062 7.893 1.13749 7.72361 1.05279C7.55421 0.968093 7.35151 0.986371 7.2 1.1L3.33333 4H1.5C0.671573 4 0 4.67158 0 5.5V9.5C0 10.3284 0.671573 11 1.5 11H3.33333L7.2 13.9C7.35151 14.0136 7.55421 14.0319 7.72361 13.9472C7.893 13.8625 8 13.6894 8 13.5V1.5ZM3.8 4.9L7 2.5V12.5L3.8 10.1C3.71345 10.0351 3.60819 10 3.5 10H1.5C1.22386 10 1 9.77614 1 9.5V5.5C1 5.22386 1.22386 5 1.5 5H3.5C3.60819 5 3.71345 4.96491 3.8 4.9ZM10.833 3.95949C10.7106 3.77557 10.4623 3.72567 10.2784 3.84804C10.0944 3.97041 10.0445 4.21871 10.1669 4.40264C11.4111 6.27268 11.4111 8.72728 10.1669 10.5973C10.0445 10.7813 10.0944 11.0296 10.2784 11.1519C10.4623 11.2743 10.7106 11.2244 10.833 11.0405C12.2558 8.90199 12.2558 6.09798 10.833 3.95949Z"
+									fill={color}
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+								/></svg
+							>
+						{:else}
+							<svg
+								width="15"
+								height="15"
+								viewBox="0 0 15 15"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								><path
+									d="M7.72361 1.05279C7.893 1.13749 8 1.31062 8 1.5V13.5C8 13.6894 7.893 13.8625 7.72361 13.9472C7.55421 14.0319 7.35151 14.0136 7.2 13.9L3.33333 11H1.5C0.671573 11 0 10.3284 0 9.5V5.5C0 4.67158 0.671573 4 1.5 4H3.33333L7.2 1.1C7.35151 0.986371 7.55421 0.968093 7.72361 1.05279ZM7 2.5L3.8 4.9C3.71345 4.96491 3.60819 5 3.5 5H1.5C1.22386 5 1 5.22386 1 5.5V9.5C1 9.77614 1.22386 10 1.5 10H3.5C3.60819 10 3.71345 10.0351 3.8 10.1L7 12.5V2.5ZM14.8536 5.14645C15.0488 5.34171 15.0488 5.65829 14.8536 5.85355L13.2071 7.5L14.8536 9.14645C15.0488 9.34171 15.0488 9.65829 14.8536 9.85355C14.6583 10.0488 14.3417 10.0488 14.1464 9.85355L12.5 8.20711L10.8536 9.85355C10.6583 10.0488 10.3417 10.0488 10.1464 9.85355C9.95118 9.65829 9.95118 9.34171 10.1464 9.14645L11.7929 7.5L10.1464 5.85355C9.95118 5.65829 9.95118 5.34171 10.1464 5.14645C10.3417 4.95118 10.6583 4.95118 10.8536 5.14645L12.5 6.79289L14.1464 5.14645C14.3417 4.95118 14.6583 4.95118 14.8536 5.14645Z"
+									fill={color}
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+								/></svg
+							>
+						{/if}
+					</button>
+					{#if !disableVolSlider}
+						<input
+							name="volume"
+							type="range"
+							max={1}
+							min={0}
+							step={0.1}
+							value={volume}
+							on:input={changeVolume}
+						/>
 					{/if}
-				</button>
-				{#if !disableVolSlider}
-					<input
-						name="volume"
-						type="range"
-						max={1}
-						min={0}
-						step={0.1}
-						value={volume}
-						on:input={changeVolume}
-					/>
-				{/if}
+				</div>
 			</div>
 		{/if}
 	</div>

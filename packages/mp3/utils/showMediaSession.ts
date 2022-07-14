@@ -19,23 +19,23 @@ export const showMediaSession = (
 		isPlaying.set(false);
 		navigator.mediaSession.playbackState = "paused";
 	});
-	
+
 	navigator.mediaSession.setActionHandler("stop", function () {
 		isPlaying.set(false);
 	});
-	
+
 	navigator.mediaSession.setActionHandler("previoustrack", function () {
 		const tI = get(trackIndex);
 		if (tI - 1 < 0) trackIndex.set(0);
 		else trackIndex.set(tI - 1);
 	});
-	
+
 	navigator.mediaSession.setActionHandler("nexttrack", function () {
 		const tI = get(trackIndex);
 		if (tI < numOfTracks - 1) trackIndex.set(tI + 1);
 		else trackIndex.set(0);
 	});
-	
+
 	navigator.mediaSession.setActionHandler("seekto", function (e: any) {
 		audio.currentTime = e.seekTime;
 	});
