@@ -27,7 +27,7 @@
 <div class="grid h-screen items-center" in:fade>
 	<form class="space-y-12">
 		<fieldset class="card m-auto block w-2/3 space-y-8">
-			<h1 class="prose text-center font-mono text-2xl tracking-wider">
+			<h1 class="prose m-auto text-center font-mono text-2xl tracking-wider">
 				<span class="border-wood rounded border-b-2 pb-1">mint a mix</span>
 			</h1>
 

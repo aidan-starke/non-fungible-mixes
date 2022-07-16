@@ -48,7 +48,7 @@
 				<p class="mb-2 text-sm text-gray-500">
 					<span class="font-semibold">click to upload</span> / drag and drop
 				</p>
-				<p class="text-xs text-gray-500">MP3, OGG, or WAV (MAX 25GB)</p>
+				<p class="text-xs text-gray-500">MP3, OGG, or WAV (max 25GB)</p>
 			{/if}
 		</div>
 
